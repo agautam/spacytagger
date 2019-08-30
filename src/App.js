@@ -84,9 +84,9 @@ class App extends React.Component {
 }
 
 function getSelectionText() {
-    var text = "";
-    var activeEl = document.activeElement;
-    var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+    let text = "";
+    const activeEl = document.activeElement;
+    const activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
     if (
         (activeElTagName == "textarea") || (activeElTagName == "input" &&
             /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
@@ -94,7 +94,29 @@ function getSelectionText() {
     ) {
         text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
     } else if (window.getSelection) {
-        text = window.getSelection().toString();
+        const s = window.getSelection();
+        const range = s.getRangeAt(0);
+        const node = s.anchorNode;
+        while (range.toString().indexOf(' ') != 0 && range.startOffset>0) {
+            range.setStart(node, (range.startOffset - 1));
+        }
+
+        if (range.toString().indexOf(' ') == 0) {
+            range.setStart(node, range.startOffset + 1);
+        }
+
+        while (range.endOffset < node.length && !range.toString().endsWith(' ') && range.toString().trim() != '') {
+            range.setEnd(node, range.endOffset + 1);
+
+        }
+
+        text = range.toString().trim();
+
+        if (range.toString() != text) {
+            range.setEnd(node, range.endOffset - 1);
+        }
+      //  while (range.toString().indexOf(' ') == -1 && range.toString().trim() != '');
+        text = range.toString().trim();
     }
     return text;
 }
