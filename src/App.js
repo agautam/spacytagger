@@ -12,6 +12,7 @@ class TextDisplay extends React.Component {
         };
 
         this.togglePopup = this.togglePopup.bind(this);
+        this.closePopup = this.closePopup.bind(this);
     }
 
     togglePopup(event) {
@@ -33,6 +34,15 @@ class TextDisplay extends React.Component {
         }
     }
 
+    closePopup(event) {
+        this.setState({
+            selectedText: null,
+            showPopup: false,
+            pbottom: event.clientY,
+            pleft: event.clientX,
+        });
+    }
+
     render() {
         return (
             <div>
@@ -43,7 +53,7 @@ class TextDisplay extends React.Component {
                         bottom={this.state.pbottom}
                         left={this.state.pleft}
                         text={getSelectionText()}
-                        closePopup={this.togglePopup}
+                        closePopup={this.closePopup}
                     />
                     : null
                 }
