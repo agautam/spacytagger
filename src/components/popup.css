@@ -1,0 +1,20 @@
+.popup {
+   /* position: fixed;
+    width: 100%;
+    height: 100%; */
+    position: absolute;
+    display:inline;
+    border-radius: 20px;
+    padding:10px;
+    background-color: rgba(239, 251, 186, 0.80);
+    z-index:10000;
+}
+
+.inner {
+    margin: auto;
+    border-radius: 18px;
+    background: white;
+    z-index:10000;
+    padding: 8px;
+    color:brown;
+}
