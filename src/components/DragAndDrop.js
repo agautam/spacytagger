@@ -1,12 +1,13 @@
 import React from 'react';
 
 class DragAndDrop extends React.Component {
-
-    state = {
-        drag: false,
+    constructor(props) {
+        super(props);
+        this.state = {
+            drag: false,
+        }
     }
 
-    dropRef = React.createRef();
     dragCounter = 0;
 
     handleDrag = (e) => {
@@ -18,7 +19,7 @@ class DragAndDrop extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         this.dragCounter++;
-        if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+        if (!this.state.drag && e.dataTransfer.items && e.dataTransfer.items.length > 0) {
             this.setState({ drag: true });
         }
     }
@@ -27,7 +28,7 @@ class DragAndDrop extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         this.dragCounter--;
-        if (this.dragCounter === 0) {
+        if (this.state.drag && this.dragCounter === 0) {
             this.setState({ drag: false });
         }
     }
@@ -43,33 +44,21 @@ class DragAndDrop extends React.Component {
         }
     }
 
-    componentDidMount() {
-        let div = this.dropRef.current;
-        div.addEventListener('dragenter', this.handleDragIn);
-        div.addEventListener('dragleave', this.handleDragOut);
-        div.addEventListener('dragover', this.handleDrag);
-        div.addEventListener('drop', this.handleDrop);
-    }
-
-    componentWillUnmount() {
-        let div = this.dropRef.current;
-        div.removeEventListener('dragenter', this.handleDragIn);
-        div.removeEventListener('dragleave', this.handleDragOut);
-        div.removeEventListener('dragover', this.handleDrag);
-        div.removeEventListener('drop', this.handleDrop);
-    }
-
     render() {
         return (
             <div
-                style={{ display: 'inline-block', position: 'relative' }}
-                ref={this.dropRef}
+                style={{ position: 'relative' }}
+                onDragEnter={this.handleDragIn}
+                onDragLeave={this.handleDragOut}
+                onDragOver={this.handleDrag}
+                onDrop={this.handleDrop}
             >
                 {this.state.drag &&
                     <div
                         style={{
-                            border: 'dashed grey 4px',
-                            backgroundColor: 'rgba(255,255,255,.8)',
+                            backgroundColor: 'rgba(255,255,255,.9)',
+                        border: 'dashed grey 4px',
+                            margin: '20px',
                             position: 'absolute',
                             top: 0,
                             bottom: 0,
@@ -86,10 +75,10 @@ class DragAndDrop extends React.Component {
                                 left: 0,
                                 textAlign: 'center',
                                 color: 'grey',
-                                fontSize: 36
+                                fontSize: 46
                             }}
                         >
-                            <div>drop here :)</div>
+                            <div>Drop here :)</div>
                         </div>
                     </div>
                 }
