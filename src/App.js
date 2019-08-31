@@ -57,7 +57,7 @@ class TextDisplay extends React.Component {
                     />
                     : null
                 }
-                <div onMouseUp={this.togglePopup} onKeyUp={this.togglePopup} > {this.props.text}</div>
+                <div style={{textAlign: 'left',}} onMouseUp={this.togglePopup} onKeyUp={this.togglePopup} ><pre> {this.props.text}</pre></div>
             </div>
         );
     }
@@ -79,7 +79,10 @@ class App extends React.Component {
 
     readFile = (file) => {
         const fileReader = new FileReader();
-        fileReader.onloadend = this.updateTextDisplay;
+        fileReader.onloadend = (e) => {
+            const content = e.currentTarget.result;
+            this.setState({ text: content, });
+        };
         fileReader.readAsText(file);
     };
 
