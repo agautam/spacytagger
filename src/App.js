@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import Popup from './components/Popup'
+import Popup from './components/Popup';
+import DragAndDrop from './components/DragAndDrop.js';
 
 class TextDisplay extends React.Component {
     constructor(props) {
@@ -8,7 +9,7 @@ class TextDisplay extends React.Component {
         this.state = {
             text: this.props.text,
             bottom: 0,
-            left:0,
+            left: 0,
         };
 
         this.togglePopup = this.togglePopup.bind(this);
@@ -57,14 +58,14 @@ class TextDisplay extends React.Component {
                     />
                     : null
                 }
-                <div onMouseUp={this.togglePopup} onKeyUp = { this.togglePopup } > { this.state.text }</div>
+                <div onMouseUp={this.togglePopup} onKeyUp={this.togglePopup} > {this.state.text}</div>
             </div>
         );
     }
 }
 
 class App extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             showPopup: false
@@ -73,22 +74,24 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <TextDisplay text="This is some sample text" />
-                    <p>
-                        Edit <code>src/App.js</code> and save to reload.
+            <DragAndDrop>
+                <div className="App">
+                    <header className="App-header">
+                        <TextDisplay text="This is some sample text" />
+                        <p>
+                            Edit <code>src/App.js</code> and save to reload.
                 </p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
+                        <a
+                            className="App-link"
+                            href="https://reactjs.org"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Learn React
                 </a>
-                </header>
-            </div>
+                    </header>
+                </div>
+            </DragAndDrop>
         );
     }
 }
@@ -107,7 +110,7 @@ function getSelectionText() {
         const s = window.getSelection();
         const range = s.getRangeAt(0);
         const node = s.anchorNode;
-        while (range.toString().indexOf(' ') != 0 && range.startOffset>0) {
+        while (range.toString().indexOf(' ') != 0 && range.startOffset > 0) {
             range.setStart(node, (range.startOffset - 1));
         }
 
@@ -125,7 +128,7 @@ function getSelectionText() {
         if (range.toString() != text) {
             range.setEnd(node, range.endOffset - 1);
         }
-      //  while (range.toString().indexOf(' ') == -1 && range.toString().trim() != '');
+        //  while (range.toString().indexOf(' ') == -1 && range.toString().trim() != '');
         text = range.toString().trim();
     }
     return text;
