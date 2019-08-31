@@ -1,3 +1,7 @@
+## SpaCy training tool
+
+A REACT based client-side tool to tag text with parts-of-speech to provide as training data to [https://stacy.io](SpaCy)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
