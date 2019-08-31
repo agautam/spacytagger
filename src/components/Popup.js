@@ -4,7 +4,7 @@ import './popup.css';
 class Popup extends React.Component {
     render() {
         return (
-            <div className='popup' style={{ top: this.props.bottom, left: this.props.left }}>
+            <div className='popup' style={{ top: this.props.bottom - 210, left: this.props.left }}>
                 <div className='inner'>
                     <p>
                         <span>{this.props.text}</span><br/>

@@ -21,15 +21,15 @@ class TextDisplay extends React.Component {
             this.setState({
                 selectedText: selectedText,
                 showPopup: true,
-                pbottom: event.clientY,
-                pleft: event.clientX,
+                pbottom: event.pageY,
+                pleft: event.pageX,
             });
         } else if (!selectedText && this.state.selectedText) {
             this.setState({
                 selectedText: null,
                 showPopup: false,
-                pbottom: event.clientY,
-                pleft: event.clientX,
+                pbottom: event.pageY,
+                pleft: event.pageX,
             });
         }
     }
@@ -38,8 +38,8 @@ class TextDisplay extends React.Component {
         this.setState({
             selectedText: null,
             showPopup: false,
-            pbottom: event.clientY,
-            pleft: event.clientX,
+            pbottom: event.pageY,
+            pleft: event.pageX,
         });
     }
 
