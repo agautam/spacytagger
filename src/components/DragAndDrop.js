@@ -13,7 +13,7 @@ class DragAndDrop extends React.Component {
     handleDrag = (e) => {
         e.preventDefault();
         e.stopPropagation();
-    }
+    };
 
     handleDragIn = (e) => {
         e.preventDefault();
@@ -22,7 +22,7 @@ class DragAndDrop extends React.Component {
         if (!this.state.drag && e.dataTransfer.items && e.dataTransfer.items.length > 0) {
             this.setState({ drag: true });
         }
-    }
+    };
 
     handleDragOut = (e) => {
         e.preventDefault();
@@ -31,7 +31,7 @@ class DragAndDrop extends React.Component {
         if (this.state.drag && this.dragCounter === 0) {
             this.setState({ drag: false });
         }
-    }
+    };
 
     handleDrop = (e) => {
         e.preventDefault();
@@ -42,7 +42,7 @@ class DragAndDrop extends React.Component {
             e.dataTransfer.clearData();
             this.dragCounter = 0;
         }
-    }
+    };
 
     render() {
         return (

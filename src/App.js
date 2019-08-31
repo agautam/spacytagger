@@ -7,7 +7,6 @@ class TextDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: this.props.text,
             bottom: 0,
             left: 0,
         };
@@ -47,7 +46,7 @@ class TextDisplay extends React.Component {
     render() {
         return (
             <div>
-                <h1> Simple Popup Example In React Application </h1>
+                <h1>SpaCy Training Feeder</h1>
 
                 {this.state.showPopup ?
                     <Popup
@@ -58,7 +57,7 @@ class TextDisplay extends React.Component {
                     />
                     : null
                 }
-                <div onMouseUp={this.togglePopup} onKeyUp={this.togglePopup} > {this.state.text}</div>
+                <div onMouseUp={this.togglePopup} onKeyUp={this.togglePopup} > {this.props.text}</div>
             </div>
         );
     }
@@ -68,27 +67,34 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showPopup: false
+            showPopup: false,
+            text: 'this is some sample text',
         };
     }
 
+    updateTextDisplay = (e) => {
+        const content = e.currentTarget.result;
+        this.setState({ text: content, });
+    };
+
+    readFile = (file) => {
+        const fileReader = new FileReader();
+        fileReader.onloadend = this.updateTextDisplay;
+        fileReader.readAsText(file);
+    };
+
+    handleDrop = (files) => {
+        if (files.length == 1) {
+            this.readFile(files[0]);
+        }
+    };
+
     render() {
         return (
-            <DragAndDrop>
+            <DragAndDrop handleDrop={this.handleDrop}>
                 <div className="App">
                     <header className="App-header">
-                        <TextDisplay text="This is some sample text" />
-                        <p>
-                            Edit <code>src/App.js</code> and save to reload.
-                </p>
-                        <a
-                            className="App-link"
-                            href="https://reactjs.org"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Learn React
-                </a>
+                        <TextDisplay text={this.state.text} />
                     </header>
                 </div>
             </DragAndDrop>
@@ -128,7 +134,7 @@ function getSelectionText() {
         if (range.toString() != text) {
             range.setEnd(node, range.endOffset - 1);
         }
-        //  while (range.toString().indexOf(' ') == -1 && range.toString().trim() != '');
+
         text = range.toString().trim();
     }
     return text;
