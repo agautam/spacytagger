@@ -119,15 +119,30 @@ function getSelectionText() {
         const s = window.getSelection();
         const range = s.getRangeAt(0);
         const node = s.anchorNode;
-        while (range.toString().indexOf(' ') != 0 && range.startOffset > 0) {
+        while (range.toString().indexOf(' ') != 0 && range.toString().indexOf('\n') != 0 && !range.toString().endsWith('.')
+            && range.toString().indexOf(',') != 0
+            && range.toString().indexOf(';') != 0
+            && range.toString().indexOf(',') != 0
+            && range.toString().indexOf('"') != 0
+            && range.startOffset > 0) {
             range.setStart(node, (range.startOffset - 1));
         }
 
-        if (range.toString().indexOf(' ') == 0) {
+        if (range.toString().indexOf(' ') == 0 || range.toString().indexOf('\n') == 0
+            || range.toString().indexOf(',') == 0
+            || range.toString().indexOf(';') == 0
+            || range.toString().indexOf(',') == 0
+            || range.toString().indexOf('"') == 0) {
             range.setStart(node, range.startOffset + 1);
         }
 
-        while (range.endOffset < node.length && !range.toString().endsWith(' ') && range.toString().trim() != '') {
+        while (range.endOffset < node.length && !range.toString().endsWith(' ')
+            && !range.toString().endsWith('\n') && !range.toString().endsWith('.')
+            && !range.toString().endsWith(',')
+            && !range.toString().endsWith(';')
+            && !range.toString().endsWith(',')
+            && !range.toString().endsWith('"')
+            && range.toString().trim() != '') {
             range.setEnd(node, range.endOffset + 1);
 
         }
