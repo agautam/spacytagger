@@ -149,7 +149,12 @@ function getSelectionText() {
 
         text = range.toString().trim();
 
-        if (range.toString() != text) {
+        if (range.toString() != text || range.toString().endsWith(' ')
+            || range.toString().endsWith('\n') || range.toString().endsWith('.')
+            || range.toString().endsWith(',')
+            || range.toString().endsWith(';')
+            || range.toString().endsWith(',')
+            || range.toString().endsWith('"')) {
             range.setEnd(node, range.endOffset - 1);
         }
 
